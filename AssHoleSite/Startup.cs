@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AssHoleSite.Models;//добавлено
+using Microsoft.EntityFrameworkCore;//добавлено
 
 namespace AssHoleSite
 {
@@ -23,6 +25,8 @@ namespace AssHoleSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");//получаем строку подключения
+            services.AddDbContext<MobileContext>(options => options.UseSqlServer(connection));//подключаемся к бд
             services.AddControllersWithViews();
         }
 

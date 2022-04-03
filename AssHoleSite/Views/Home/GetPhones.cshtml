@@ -1,0 +1,18 @@
+﻿@model IEnumerable<AssHoleSite.Models.PhoneC>
+<div>
+    <table class="table-bordered">
+        <tr>
+            <td>Название</td>
+            <td>Производитель</td>
+            <td>Цена</td>
+        </tr>
+        @foreach (var phone in Model)
+        {
+            <tr>
+                <td>@phone.Name</td>
+                <td>@phone.Company</td>
+                <td>@phone.Price</td>
+            </tr>
+        }
+    </table>
+</div>

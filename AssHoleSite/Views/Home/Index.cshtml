@@ -1,8 +1,34 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model DataDbC
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <!--кнопка создания элемента-->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate">
+        Создать новый элемент
+    </button>
+    <!--Основная часть-->
+    <div class="row">
+        <!--Категории-->
+        @await Html.PartialAsync("GetCategories", Model.CategoryM)
+        <!--Элементы-->
+        @await Html.PartialAsync("GetPhones", Model.PhoneM)
+    </div>
+    <!--модальное окно-->
+    <div class="modal" id="ModalCreate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Изменение значений учетной единицы</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Отменить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
