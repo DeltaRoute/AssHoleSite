@@ -1,0 +1,21 @@
+﻿@model AssHoleSite.Models.PhoneC
+
+<form asp-action="DeleteModel">
+    <h3>Вы точно хотите удалить этот элемент ?</h3>
+    <div>
+        <table class="table-bordered">
+            <tr>
+                <td>Название</td>
+                <td>Производитель</td>
+                <td>Цена</td>
+            </tr>
+            <tr>
+                <td>@ViewBag.Name</td>
+                <td>@ViewBag.Company</td>
+                <td>@ViewBag.Price</td>
+            </tr>
+        </table>
+        <button type="submit">Да, удалить</button>
+        <button type="button" href="@Url.Action("Index","Home")"></button>
+    </div>
+</form>

@@ -13,50 +13,87 @@ namespace AssHoleSite.Controllers
     public class HomeController : Controller
     {
         MobileContext db;//наша бд с таблицами
+        DataDbC Enigma = new DataDbC();
+        int current_cat = 0;
+        
         public HomeController(MobileContext context)
         {
             db = context;//
+            
         }
-
         public IActionResult Index()
         {
-            DataDbC Enigma = new DataDbC { PhoneM = db.Phones.ToList(), CategoryM = db.Categories.ToList() };
+            Enigma.PhoneM = db.Phones.ToList();
+            Enigma.CategoryM = db.Categories.ToList();
             return View(Enigma);
         }
         public IActionResult GetCategories()
         {
-            return PartialView("GetCategories");
+            
+            return PartialView(db.Categories.ToList());
         }
         public IActionResult GetPhones()
         {
-            return View();
+            return PartialView();
         }
-
-        public IActionResult Edit(int id)
+        public IActionResult GetFilteredModel(CategoryC category)//к сожалению, не работает
+        {
+            current_cat = category.Id;
+            return RedirectToPage("Index");
+        }
+        public IActionResult EditModel(int id)
         {
             PhoneC element = db.Phones.Find(id);
             ViewBag.Name = element.Name;
             ViewBag.Company = element.Company;
             ViewBag.Price = element.Price;
             ViewBag.CategoryId = element.Parent;
-            return View(element);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Edit(PhoneC phone)
+        public IActionResult EditModel(PhoneC phone)
         {
-            db.Entry<PhoneC>(phone).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                db.Entry<PhoneC>(phone).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return View();
         }
-        public IActionResult Create()
+        public IActionResult CreateModel()
         {
+            PhoneC element = new PhoneC();
+            
+            ViewBag.Name = element.Name;
+            ViewBag.Company = element.Company;
+            ViewBag.Price = element.Price;
+            ViewBag.CategoryId = element.Parent;
             return PartialView();
         }
         [HttpPost]
-        public IActionResult Create(PhoneC phone)
+        public IActionResult CreateModel(PhoneC phone)
         {
             db.Phones.Add(phone);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult DeleteModel(int id)
+        {
+            PhoneC erased = db.Phones.Find(id);
+            ViewBag.Name = erased.Name;
+            ViewBag.Company = erased.Company;
+            ViewBag.Price = erased.Price;
+            ViewBag.CategoryId = erased.Parent;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult DeleteModel(PhoneC phone)
+        {
+            PhoneC deleted = db.Phones.Find(phone.Id);
+            db.Phones.Remove(deleted);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
