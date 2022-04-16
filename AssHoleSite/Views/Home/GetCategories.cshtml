@@ -2,9 +2,8 @@
 <div>
     @foreach (var category in Model)
     {
-
         <ul>
-            <li>@category.Name.</li>
+            <li><a href="@Url.Action("GetFiltered","Home",new { parent = category })">@category.Name</a></li>
         </ul>
     }
 </div>

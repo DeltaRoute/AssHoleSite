@@ -1,0 +1,13 @@
+﻿@model AssHoleSite.Models.PhoneC
+
+<form asp-action="EditModel">
+    <div>Название</div>
+    <input asp-for="Name" value="@ViewBag.Name" />
+    <div>Производитель</div>
+    <input asp-for="Company" value="@ViewBag.Company" />
+    <div>Цена</div>
+    <input asp-for="Price" value="@ViewBag.Price" />
+    <div><input type="submit" value="Применить изменения" /></div>
+    <button type="button" href="@Url.Action("Index","Home")"></button>
+</form>
+

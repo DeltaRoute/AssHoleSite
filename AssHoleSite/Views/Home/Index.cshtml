@@ -1,34 +1,38 @@
 ﻿@model DataDbC
 
 <div>
-    <!--кнопка создания элемента-->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate">
-        Создать новый элемент
-    </button>
-    <!--Основная часть-->
+    <a type="button" href="@Url.Action("CreateCategory","Home")">Создать новую категорию</a>
+    <a type="button" href="@Url.Action("CreateModel","Home")">Создать новый элемент</a>
     <div class="row">
         <!--Категории-->
-        @await Html.PartialAsync("GetCategories", Model.CategoryM)
+        <div>
+            @{ foreach (var category in Model.CategoryM)
+                {
+                    <ul>
+                        <li><a href="@Url.Action("GetFiltered","Home",new { parent = category})">@category.Name</a></li>
+                    </ul>
+                }
+            }
+        </div>
         <!--Элементы-->
-        @await Html.PartialAsync("GetPhones", Model.PhoneM)
-    </div>
-    <!--модальное окно-->
-    <div class="modal" id="ModalCreate">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Изменение значений учетной единицы</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Сохранить</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Отменить</button>
-                </div>
-            </div>
+        <div>
+            <table class="table-bordered">
+                <tr>
+                    <td>Название</td>
+                    <td>Производитель</td>
+                    <td>Цена</td>
+                </tr>
+                @foreach (var phone in Model.PhoneM)
+                {
+                    <tr>
+                        <td>@phone.Name</td>
+                        <td>@phone.Company</td>
+                        <td>@phone.Price</td>
+                        <td><a type="button" href="@Url.Action("EditModel","Home",new {id = phone.Id })">Edit</a></td>
+                        <td><a type="button" href="@Url.Action("DeleteModel","Home",new {id = phone.Id })">Delete</a></td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
 </div>

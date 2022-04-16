@@ -1,0 +1,15 @@
+﻿@model PhoneC
+
+<form asp-action="CreateModel">
+    <div>Название</div>
+    <input asp-for="Name" value="@ViewBag.Name" />
+    <div>Производитель</div>
+    <input asp-for="Company" value="@ViewBag.Company" />
+    <div>Цена</div>
+    <input asp-for="Price" value="@ViewBag.Price" />
+    <select id="Select1">
+    </select>
+    <div><input type="submit" value="Создать" /></div>
+</form>
+
+
